@@ -1,0 +1,1295 @@
+2024/04/23 18:36:54 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: win32
+    Python: 3.8.18 (default, Sep 11 2023, 13:39:12) [MSC v.1916 64 bit (AMD64)]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 1257956407
+    GPU 0,1: NVIDIA RTX A4500
+    CUDA_HOME: C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3
+    NVCC: Cuda compilation tools, release 11.3, V11.3.58
+    MSVC: Microsoft (R) C/C++ Optimizing Compiler Version 19.29.30152 for x64
+    GCC: n/a
+    PyTorch: 1.10.0
+    PyTorch compiling details: PyTorch built with:
+  - C++ Version: 199711
+  - MSVC 192829337
+  - Intel(R) Math Kernel Library Version 2020.0.2 Product Build 20200624 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v2.2.3 (Git Hash 7336ca9f055cf1bfa13efb658fe15dc9b41f0740)
+  - OpenMP 2019
+  - LAPACK is enabled (usually provided by MKL)
+  - CPU capability usage: AVX512
+  - CUDA Runtime 11.3
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_37,code=compute_37
+  - CuDNN 8.2
+  - Magma 2.5.4
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.3, CUDNN_VERSION=8.2.0, CXX_COMPILER=C:/cb/pytorch_1000000000000/work/tmp_bin/sccache-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /GR /EHsc /w /bigobj -DUSE_PTHREADPOOL -openmp:experimental -IC:/cb/pytorch_1000000000000/work/mkl/include -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOCUPTI -DUSE_FBGEMM -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -DEDGE_PROFILER_USE_KINETO, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=1.10.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, 
+
+    TorchVision: 0.11.0
+    OpenCV: 4.9.0
+    MMEngine: 0.10.3
+
+Runtime environment:
+    cudnn_benchmark: False
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    dist_cfg: {'backend': 'nccl'}
+    seed: 1257956407
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+2024/04/23 18:36:55 - mmengine - INFO - Config:
+auto_scale_lr = dict(base_batch_size=48, enable=True)
+backend_args = None
+class_names = [
+    'Car',
+]
+custom_imports = dict(
+    allow_failed_imports=False,
+    imports=[
+        'models.detectors.adversarial_voxelnet',
+        'models.adversarial.voxel_perturber',
+    ])
+data_root = 'data/kitti/'
+dataset_type = 'KittiDataset'
+db_sampler = dict(
+    backend_args=None,
+    classes=[
+        'Car',
+    ],
+    data_root='data/kitti/',
+    info_path='data/kitti/kitti_dbinfos_train.pkl',
+    points_loader=dict(
+        backend_args=None,
+        coord_type='LIDAR',
+        load_dim=4,
+        type='LoadPointsFromFile',
+        use_dim=4),
+    prepare=dict(
+        filter_by_difficulty=[
+            -1,
+        ], filter_by_min_points=dict(Car=5)),
+    rate=1.0,
+    sample_groups=dict(Car=15))
+default_hooks = dict(
+    checkpoint=dict(interval=-1, type='CheckpointHook'),
+    logger=dict(interval=50, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(type='Det3DVisualizationHook'))
+default_scope = 'mmdet3d'
+env_cfg = dict(
+    cudnn_benchmark=False,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+eval_pipeline = [
+    dict(
+        backend_args=None,
+        coord_type='LIDAR',
+        load_dim=4,
+        type='LoadPointsFromFile',
+        use_dim=4),
+    dict(keys=[
+        'points',
+    ], type='Pack3DDetInputs'),
+]
+input_modality = dict(use_camera=False, use_lidar=True)
+launcher = 'none'
+load_from = 'C:\\Users\\temex\\Desktop\\mmdet3dProj\\checkpoints\\second_hv_secfpn_8xb6-80e_kitti-3d-car-75d9305e.pth'
+log_level = 'INFO'
+log_processor = dict(by_epoch=True, type='LogProcessor', window_size=50)
+lr = 0.0018
+metainfo = dict(classes=[
+    'Car',
+])
+model = dict(
+    adversary_cfg=dict(type='VoxelPerturber'),
+    backbone=dict(
+        in_channels=256,
+        layer_nums=[
+            5,
+            5,
+        ],
+        layer_strides=[
+            1,
+            2,
+        ],
+        out_channels=[
+            128,
+            256,
+        ],
+        type='SECOND'),
+    bbox_head=dict(
+        anchor_generator=dict(
+            ranges=[
+                [
+                    0,
+                    -40.0,
+                    -1.78,
+                    70.4,
+                    40.0,
+                    -1.78,
+                ],
+            ],
+            reshape_out=True,
+            rotations=[
+                0,
+                1.57,
+            ],
+            sizes=[
+                [
+                    3.9,
+                    1.6,
+                    1.56,
+                ],
+            ],
+            type='Anchor3DRangeGenerator'),
+        bbox_coder=dict(type='DeltaXYZWLHRBBoxCoder'),
+        diff_rad_by_sin=True,
+        feat_channels=512,
+        in_channels=512,
+        loss_bbox=dict(
+            beta=0.1111111111111111,
+            loss_weight=2.0,
+            type='mmdet.SmoothL1Loss'),
+        loss_cls=dict(
+            alpha=0.25,
+            gamma=2.0,
+            loss_weight=1.0,
+            type='mmdet.FocalLoss',
+            use_sigmoid=True),
+        loss_dir=dict(
+            loss_weight=0.2, type='mmdet.CrossEntropyLoss', use_sigmoid=False),
+        num_classes=1,
+        type='Anchor3DHead',
+        use_direction_classifier=True),
+    data_preprocessor=dict(
+        type='Det3DDataPreprocessor',
+        voxel=True,
+        voxel_layer=dict(
+            max_num_points=5,
+            max_voxels=(
+                16000,
+                40000,
+            ),
+            point_cloud_range=[
+                0,
+                -40,
+                -3,
+                70.4,
+                40,
+                1,
+            ],
+            voxel_size=[
+                0.05,
+                0.05,
+                0.1,
+            ])),
+    middle_encoder=dict(
+        in_channels=4,
+        order=(
+            'conv',
+            'norm',
+            'act',
+        ),
+        sparse_shape=[
+            41,
+            1600,
+            1408,
+        ],
+        type='SparseEncoder'),
+    neck=dict(
+        in_channels=[
+            128,
+            256,
+        ],
+        out_channels=[
+            256,
+            256,
+        ],
+        type='SECONDFPN',
+        upsample_strides=[
+            1,
+            2,
+        ]),
+    test_cfg=dict(
+        max_num=50,
+        min_bbox_size=0,
+        nms_across_levels=False,
+        nms_pre=100,
+        nms_thr=0.01,
+        score_thr=0.1,
+        use_rotate_nms=True),
+    train_cfg=dict(
+        allowed_border=0,
+        assigner=dict(
+            ignore_iof_thr=-1,
+            iou_calculator=dict(type='BboxOverlapsNearest3D'),
+            min_pos_iou=0.45,
+            neg_iou_thr=0.45,
+            pos_iou_thr=0.6,
+            type='Max3DIoUAssigner'),
+        debug=False,
+        pos_weight=-1),
+    type='AdversarialVoxelNet',
+    voxel_encoder=dict(type='HardSimpleVFE'))
+optim_wrapper = dict(
+    clip_grad=dict(max_norm=10, norm_type=2),
+    loss_scale='dynamic',
+    optimizer=dict(
+        betas=(
+            0.95,
+            0.99,
+        ), lr=0.0018, type='AdamW', weight_decay=0.01),
+    type='AmpOptimWrapper')
+param_scheduler = [
+    dict(
+        T_max=16,
+        begin=0,
+        by_epoch=True,
+        convert_to_iter_based=True,
+        end=16,
+        eta_min=0.018,
+        type='CosineAnnealingLR'),
+    dict(
+        T_max=24,
+        begin=16,
+        by_epoch=True,
+        convert_to_iter_based=True,
+        end=40,
+        eta_min=1.8e-07,
+        type='CosineAnnealingLR'),
+    dict(
+        T_max=16,
+        begin=0,
+        by_epoch=True,
+        convert_to_iter_based=True,
+        end=16,
+        eta_min=0.8947368421052632,
+        type='CosineAnnealingMomentum'),
+    dict(
+        T_max=24,
+        begin=16,
+        by_epoch=True,
+        convert_to_iter_based=True,
+        end=40,
+        eta_min=1,
+        type='CosineAnnealingMomentum'),
+]
+point_cloud_range = [
+    0,
+    -40,
+    -3,
+    70.4,
+    40,
+    1,
+]
+resume = False
+test_cfg = dict()
+test_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='kitti_infos_val.pkl',
+        backend_args=None,
+        box_type_3d='LiDAR',
+        data_prefix=dict(pts='training/velodyne_reduced'),
+        data_root='data/kitti/',
+        metainfo=dict(classes=[
+            'Car',
+        ]),
+        modality=dict(use_camera=False, use_lidar=True),
+        pipeline=[
+            dict(
+                backend_args=None,
+                coord_type='LIDAR',
+                load_dim=4,
+                type='LoadPointsFromFile',
+                use_dim=4),
+            dict(
+                flip=False,
+                img_scale=(
+                    1333,
+                    800,
+                ),
+                pts_scale_ratio=1,
+                transforms=[
+                    dict(
+                        rot_range=[
+                            0,
+                            0,
+                        ],
+                        scale_ratio_range=[
+                            1.0,
+                            1.0,
+                        ],
+                        translation_std=[
+                            0,
+                            0,
+                            0,
+                        ],
+                        type='GlobalRotScaleTrans'),
+                    dict(type='RandomFlip3D'),
+                    dict(
+                        point_cloud_range=[
+                            0,
+                            -40,
+                            -3,
+                            70.4,
+                            40,
+                            1,
+                        ],
+                        type='PointsRangeFilter'),
+                ],
+                type='MultiScaleFlipAug3D'),
+            dict(keys=[
+                'points',
+            ], type='Pack3DDetInputs'),
+        ],
+        test_mode=True,
+        type='KittiDataset'),
+    drop_last=False,
+    num_workers=1,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    ann_file='data/kitti/kitti_infos_val.pkl',
+    backend_args=None,
+    metric='bbox',
+    type='KittiMetric')
+test_pipeline = [
+    dict(
+        backend_args=None,
+        coord_type='LIDAR',
+        load_dim=4,
+        type='LoadPointsFromFile',
+        use_dim=4),
+    dict(
+        flip=False,
+        img_scale=(
+            1333,
+            800,
+        ),
+        pts_scale_ratio=1,
+        transforms=[
+            dict(
+                rot_range=[
+                    0,
+                    0,
+                ],
+                scale_ratio_range=[
+                    1.0,
+                    1.0,
+                ],
+                translation_std=[
+                    0,
+                    0,
+                    0,
+                ],
+                type='GlobalRotScaleTrans'),
+            dict(type='RandomFlip3D'),
+            dict(
+                point_cloud_range=[
+                    0,
+                    -40,
+                    -3,
+                    70.4,
+                    40,
+                    1,
+                ],
+                type='PointsRangeFilter'),
+        ],
+        type='MultiScaleFlipAug3D'),
+    dict(keys=[
+        'points',
+    ], type='Pack3DDetInputs'),
+]
+train_cfg = dict(by_epoch=True, max_epochs=1, val_interval=1)
+train_dataloader = dict(
+    batch_size=6,
+    dataset=dict(
+        dataset=dict(
+            ann_file='kitti_infos_train.pkl',
+            backend_args=None,
+            box_type_3d='LiDAR',
+            data_prefix=dict(pts='training/velodyne_reduced'),
+            data_root='data/kitti/',
+            metainfo=dict(classes=[
+                'Car',
+            ]),
+            modality=dict(use_camera=False, use_lidar=True),
+            pipeline=[
+                dict(
+                    backend_args=None,
+                    coord_type='LIDAR',
+                    load_dim=4,
+                    type='LoadPointsFromFile',
+                    use_dim=4),
+                dict(
+                    type='LoadAnnotations3D',
+                    with_bbox_3d=True,
+                    with_label_3d=True),
+                dict(
+                    db_sampler=dict(
+                        backend_args=None,
+                        classes=[
+                            'Car',
+                        ],
+                        data_root='data/kitti/',
+                        info_path='data/kitti/kitti_dbinfos_train.pkl',
+                        points_loader=dict(
+                            backend_args=None,
+                            coord_type='LIDAR',
+                            load_dim=4,
+                            type='LoadPointsFromFile',
+                            use_dim=4),
+                        prepare=dict(
+                            filter_by_difficulty=[
+                                -1,
+                            ],
+                            filter_by_min_points=dict(Car=5)),
+                        rate=1.0,
+                        sample_groups=dict(Car=15)),
+                    type='ObjectSample'),
+                dict(
+                    global_rot_range=[
+                        0.0,
+                        0.0,
+                    ],
+                    num_try=100,
+                    rot_range=[
+                        -0.78539816,
+                        0.78539816,
+                    ],
+                    translation_std=[
+                        1.0,
+                        1.0,
+                        0.5,
+                    ],
+                    type='ObjectNoise'),
+                dict(flip_ratio_bev_horizontal=0.5, type='RandomFlip3D'),
+                dict(
+                    rot_range=[
+                        -0.78539816,
+                        0.78539816,
+                    ],
+                    scale_ratio_range=[
+                        0.95,
+                        1.05,
+                    ],
+                    type='GlobalRotScaleTrans'),
+                dict(
+                    point_cloud_range=[
+                        0,
+                        -40,
+                        -3,
+                        70.4,
+                        40,
+                        1,
+                    ],
+                    type='PointsRangeFilter'),
+                dict(
+                    point_cloud_range=[
+                        0,
+                        -40,
+                        -3,
+                        70.4,
+                        40,
+                        1,
+                    ],
+                    type='ObjectRangeFilter'),
+                dict(type='PointShuffle'),
+                dict(
+                    keys=[
+                        'points',
+                        'gt_bboxes_3d',
+                        'gt_labels_3d',
+                    ],
+                    type='Pack3DDetInputs'),
+            ],
+            test_mode=False,
+            type='KittiDataset'),
+        times=2,
+        type='RepeatDataset'),
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+train_pipeline = [
+    dict(
+        backend_args=None,
+        coord_type='LIDAR',
+        load_dim=4,
+        type='LoadPointsFromFile',
+        use_dim=4),
+    dict(type='LoadAnnotations3D', with_bbox_3d=True, with_label_3d=True),
+    dict(
+        db_sampler=dict(
+            backend_args=None,
+            classes=[
+                'Car',
+            ],
+            data_root='data/kitti/',
+            info_path='data/kitti/kitti_dbinfos_train.pkl',
+            points_loader=dict(
+                backend_args=None,
+                coord_type='LIDAR',
+                load_dim=4,
+                type='LoadPointsFromFile',
+                use_dim=4),
+            prepare=dict(
+                filter_by_difficulty=[
+                    -1,
+                ], filter_by_min_points=dict(Car=5)),
+            rate=1.0,
+            sample_groups=dict(Car=15)),
+        type='ObjectSample'),
+    dict(
+        global_rot_range=[
+            0.0,
+            0.0,
+        ],
+        num_try=100,
+        rot_range=[
+            -0.78539816,
+            0.78539816,
+        ],
+        translation_std=[
+            1.0,
+            1.0,
+            0.5,
+        ],
+        type='ObjectNoise'),
+    dict(flip_ratio_bev_horizontal=0.5, type='RandomFlip3D'),
+    dict(
+        rot_range=[
+            -0.78539816,
+            0.78539816,
+        ],
+        scale_ratio_range=[
+            0.95,
+            1.05,
+        ],
+        type='GlobalRotScaleTrans'),
+    dict(
+        point_cloud_range=[
+            0,
+            -40,
+            -3,
+            70.4,
+            40,
+            1,
+        ],
+        type='PointsRangeFilter'),
+    dict(
+        point_cloud_range=[
+            0,
+            -40,
+            -3,
+            70.4,
+            40,
+            1,
+        ],
+        type='ObjectRangeFilter'),
+    dict(type='PointShuffle'),
+    dict(
+        keys=[
+            'points',
+            'gt_bboxes_3d',
+            'gt_labels_3d',
+        ],
+        type='Pack3DDetInputs'),
+]
+val_cfg = dict()
+val_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='kitti_infos_val.pkl',
+        backend_args=None,
+        box_type_3d='LiDAR',
+        data_prefix=dict(pts='training/velodyne_reduced'),
+        data_root='data/kitti/',
+        metainfo=dict(classes=[
+            'Car',
+        ]),
+        modality=dict(use_camera=False, use_lidar=True),
+        pipeline=[
+            dict(
+                backend_args=None,
+                coord_type='LIDAR',
+                load_dim=4,
+                type='LoadPointsFromFile',
+                use_dim=4),
+            dict(
+                flip=False,
+                img_scale=(
+                    1333,
+                    800,
+                ),
+                pts_scale_ratio=1,
+                transforms=[
+                    dict(
+                        rot_range=[
+                            0,
+                            0,
+                        ],
+                        scale_ratio_range=[
+                            1.0,
+                            1.0,
+                        ],
+                        translation_std=[
+                            0,
+                            0,
+                            0,
+                        ],
+                        type='GlobalRotScaleTrans'),
+                    dict(type='RandomFlip3D'),
+                    dict(
+                        point_cloud_range=[
+                            0,
+                            -40,
+                            -3,
+                            70.4,
+                            40,
+                            1,
+                        ],
+                        type='PointsRangeFilter'),
+                ],
+                type='MultiScaleFlipAug3D'),
+            dict(keys=[
+                'points',
+            ], type='Pack3DDetInputs'),
+        ],
+        test_mode=True,
+        type='KittiDataset'),
+    drop_last=False,
+    num_workers=1,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    ann_file='data/kitti/kitti_infos_val.pkl',
+    backend_args=None,
+    metric='bbox',
+    type='KittiMetric')
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    name='visualizer',
+    type='Det3DLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+voxel_size = [
+    0.05,
+    0.05,
+    0.1,
+]
+work_dir = 'C:\\Users\\temex\\Desktop\\mmdet3dProj\\NewAdvTrainingOutput'
+
+2024/04/23 18:36:55 - mmengine - WARNING - Failed to search registry with scope "mmdet3d" in the "adversaries" registry tree. As a workaround, the current "adversaries" registry in "models" is used to build instance. This may cause unexpected failure when running the built modules. Please check whether "mmdet3d" is a correct scope, or whether the registry is initialized.
+2024/04/23 18:36:55 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+2024/04/23 18:36:55 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) Det3DVisualizationHook             
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) Det3DVisualizationHook             
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+2024/04/23 18:36:56 - mmengine - INFO - Using CustomRunner for AdversarialVoxelNet
+2024/04/23 18:36:56 - mmengine - INFO - load 2207 Pedestrian database infos in DataBaseSampler
+2024/04/23 18:36:56 - mmengine - INFO - load 14357 Car database infos in DataBaseSampler
+2024/04/23 18:36:56 - mmengine - INFO - load 734 Cyclist database infos in DataBaseSampler
+2024/04/23 18:36:56 - mmengine - INFO - load 1297 Van database infos in DataBaseSampler
+2024/04/23 18:36:56 - mmengine - INFO - load 488 Truck database infos in DataBaseSampler
+2024/04/23 18:36:56 - mmengine - INFO - load 224 Tram database infos in DataBaseSampler
+2024/04/23 18:36:56 - mmengine - INFO - load 337 Misc database infos in DataBaseSampler
+2024/04/23 18:36:56 - mmengine - INFO - load 56 Person_sitting database infos in DataBaseSampler
+2024/04/23 18:36:56 - mmengine - INFO - After filter database:
+2024/04/23 18:36:56 - mmengine - INFO - load 2104 Pedestrian database infos in DataBaseSampler
+2024/04/23 18:36:56 - mmengine - INFO - load 10520 Car database infos in DataBaseSampler
+2024/04/23 18:36:56 - mmengine - INFO - load 594 Cyclist database infos in DataBaseSampler
+2024/04/23 18:36:56 - mmengine - INFO - load 826 Van database infos in DataBaseSampler
+2024/04/23 18:36:56 - mmengine - INFO - load 321 Truck database infos in DataBaseSampler
+2024/04/23 18:36:56 - mmengine - INFO - load 199 Tram database infos in DataBaseSampler
+2024/04/23 18:36:56 - mmengine - INFO - load 259 Misc database infos in DataBaseSampler
+2024/04/23 18:36:56 - mmengine - INFO - load 53 Person_sitting database infos in DataBaseSampler
+2024/04/23 18:37:00 - mmengine - INFO - ------------------------------
+2024/04/23 18:37:00 - mmengine - INFO - The length of training dataset: 3712
+2024/04/23 18:37:00 - mmengine - INFO - The number of instances per category in the dataset:
++----------+--------+
+| category | number |
++----------+--------+
+| Car      | 14357  |
++----------+--------+
+2024/04/23 18:37:00 - mmengine - INFO - LR is set based on batch size of 48 and the current batch size is 6. Scaling the original LR by 0.125.
+2024/04/23 18:37:04 - mmengine - INFO - ------------------------------
+2024/04/23 18:37:04 - mmengine - INFO - The length of test dataset: 3769
+2024/04/23 18:37:04 - mmengine - INFO - The number of instances per category in the dataset:
++----------+--------+
+| category | number |
++----------+--------+
+| Car      | 14385  |
++----------+--------+
+Name of parameter - Initialization information
+
+backbone.blocks.0.0.weight - torch.Size([128, 256, 3, 3]): 
+KaimingInit: a=0, mode=fan_out, nonlinearity=relu, distribution =normal, bias=0 
+
+backbone.blocks.0.1.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.0.1.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.0.3.weight - torch.Size([128, 128, 3, 3]): 
+KaimingInit: a=0, mode=fan_out, nonlinearity=relu, distribution =normal, bias=0 
+
+backbone.blocks.0.4.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.0.4.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.0.6.weight - torch.Size([128, 128, 3, 3]): 
+KaimingInit: a=0, mode=fan_out, nonlinearity=relu, distribution =normal, bias=0 
+
+backbone.blocks.0.7.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.0.7.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.0.9.weight - torch.Size([128, 128, 3, 3]): 
+KaimingInit: a=0, mode=fan_out, nonlinearity=relu, distribution =normal, bias=0 
+
+backbone.blocks.0.10.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.0.10.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.0.12.weight - torch.Size([128, 128, 3, 3]): 
+KaimingInit: a=0, mode=fan_out, nonlinearity=relu, distribution =normal, bias=0 
+
+backbone.blocks.0.13.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.0.13.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.0.15.weight - torch.Size([128, 128, 3, 3]): 
+KaimingInit: a=0, mode=fan_out, nonlinearity=relu, distribution =normal, bias=0 
+
+backbone.blocks.0.16.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.0.16.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.1.0.weight - torch.Size([256, 128, 3, 3]): 
+KaimingInit: a=0, mode=fan_out, nonlinearity=relu, distribution =normal, bias=0 
+
+backbone.blocks.1.1.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.1.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.1.3.weight - torch.Size([256, 256, 3, 3]): 
+KaimingInit: a=0, mode=fan_out, nonlinearity=relu, distribution =normal, bias=0 
+
+backbone.blocks.1.4.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.1.4.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.1.6.weight - torch.Size([256, 256, 3, 3]): 
+KaimingInit: a=0, mode=fan_out, nonlinearity=relu, distribution =normal, bias=0 
+
+backbone.blocks.1.7.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.1.7.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.1.9.weight - torch.Size([256, 256, 3, 3]): 
+KaimingInit: a=0, mode=fan_out, nonlinearity=relu, distribution =normal, bias=0 
+
+backbone.blocks.1.10.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.1.10.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.1.12.weight - torch.Size([256, 256, 3, 3]): 
+KaimingInit: a=0, mode=fan_out, nonlinearity=relu, distribution =normal, bias=0 
+
+backbone.blocks.1.13.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.1.13.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.1.15.weight - torch.Size([256, 256, 3, 3]): 
+KaimingInit: a=0, mode=fan_out, nonlinearity=relu, distribution =normal, bias=0 
+
+backbone.blocks.1.16.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+backbone.blocks.1.16.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+neck.deblocks.0.0.weight - torch.Size([128, 256, 1, 1]): 
+KaimingInit: a=0, mode=fan_out, nonlinearity=relu, distribution =normal, bias=0 
+
+neck.deblocks.0.1.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+neck.deblocks.0.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+neck.deblocks.1.0.weight - torch.Size([256, 256, 2, 2]): 
+KaimingInit: a=0, mode=fan_out, nonlinearity=relu, distribution =normal, bias=0 
+
+neck.deblocks.1.1.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+neck.deblocks.1.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+bbox_head.conv_cls.weight - torch.Size([2, 512, 1, 1]): 
+NormalInit: mean=0, std=0.01, bias=-4.59511985013459 
+
+bbox_head.conv_cls.bias - torch.Size([2]): 
+NormalInit: mean=0, std=0.01, bias=-4.59511985013459 
+
+bbox_head.conv_reg.weight - torch.Size([14, 512, 1, 1]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+bbox_head.conv_reg.bias - torch.Size([14]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+bbox_head.conv_dir_cls.weight - torch.Size([4, 512, 1, 1]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+bbox_head.conv_dir_cls.bias - torch.Size([4]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+middle_encoder.conv_input.0.weight - torch.Size([16, 3, 3, 3, 4]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.conv_input.1.weight - torch.Size([16]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.conv_input.1.bias - torch.Size([16]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer1.0.0.weight - torch.Size([16, 3, 3, 3, 16]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer1.0.1.weight - torch.Size([16]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer1.0.1.bias - torch.Size([16]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer2.0.0.weight - torch.Size([32, 3, 3, 3, 16]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer2.0.1.weight - torch.Size([32]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer2.0.1.bias - torch.Size([32]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer2.1.0.weight - torch.Size([32, 3, 3, 3, 32]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer2.1.1.weight - torch.Size([32]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer2.1.1.bias - torch.Size([32]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer2.2.0.weight - torch.Size([32, 3, 3, 3, 32]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer2.2.1.weight - torch.Size([32]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer2.2.1.bias - torch.Size([32]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer3.0.0.weight - torch.Size([64, 3, 3, 3, 32]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer3.0.1.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer3.0.1.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer3.1.0.weight - torch.Size([64, 3, 3, 3, 64]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer3.1.1.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer3.1.1.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer3.2.0.weight - torch.Size([64, 3, 3, 3, 64]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer3.2.1.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer3.2.1.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer4.0.0.weight - torch.Size([64, 3, 3, 3, 64]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer4.0.1.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer4.0.1.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer4.1.0.weight - torch.Size([64, 3, 3, 3, 64]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer4.1.1.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer4.1.1.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer4.2.0.weight - torch.Size([64, 3, 3, 3, 64]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer4.2.1.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.encoder_layers.encoder_layer4.2.1.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.conv_out.0.weight - torch.Size([128, 3, 1, 1, 64]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.conv_out.1.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+middle_encoder.conv_out.1.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.1.weight - torch.Size([4, 4, 1]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.1.bias - torch.Size([4]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.2.weight - torch.Size([4]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.2.bias - torch.Size([4]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.4.weight - torch.Size([8, 4, 1]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.4.bias - torch.Size([8]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.5.weight - torch.Size([8]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.5.bias - torch.Size([8]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.7.weight - torch.Size([16, 8, 1]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.7.bias - torch.Size([16]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.8.weight - torch.Size([16]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.8.bias - torch.Size([16]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.10.weight - torch.Size([32, 16, 1]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.10.bias - torch.Size([32]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.11.weight - torch.Size([32]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.11.bias - torch.Size([32]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.13.weight - torch.Size([16, 32, 1]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.13.bias - torch.Size([16]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.14.weight - torch.Size([16]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.14.bias - torch.Size([16]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.16.weight - torch.Size([8, 16, 1]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.16.bias - torch.Size([8]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.17.weight - torch.Size([8]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.17.bias - torch.Size([8]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.19.weight - torch.Size([4, 8, 1]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.19.bias - torch.Size([4]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.20.weight - torch.Size([4]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.20.bias - torch.Size([4]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.22.weight - torch.Size([4, 4, 1]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.22.bias - torch.Size([4]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.23.weight - torch.Size([4]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+
+adversary.model.23.bias - torch.Size([4]): 
+The value is the same before and after calling `init_weights` of AdversarialVoxelNet  
+2024/04/23 18:37:06 - mmengine - INFO - Load checkpoint from C:\Users\temex\Desktop\mmdet3dProj\checkpoints\second_hv_secfpn_8xb6-80e_kitti-3d-car-75d9305e.pth
+2024/04/23 18:37:06 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+2024/04/23 18:37:06 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+2024/04/23 18:37:06 - mmengine - INFO - Checkpoints will be saved to C:\Users\temex\Desktop\mmdet3dProj\NewAdvTrainingOutput.
+2024/04/23 18:38:38 - mmengine - INFO - Epoch(train) [1][  50/1238]  lr: 2.2527e-04  eta: 0:36:23  time: 1.8377  data_time: 1.3513  memory: 3132  grad_norm: inf  loss: 0.3006  loss_cls: 0.0997  loss_bbox: 0.1796  loss_dir: 0.0212
+2024/04/23 18:38:51 - mmengine - INFO - Epoch(train) [1][ 100/1238]  lr: 2.2610e-04  eta: 0:19:56  time: 0.2654  data_time: 0.0026  memory: 3145  grad_norm: 1.0588  loss: 0.2878  loss_cls: 0.0937  loss_bbox: 0.1760  loss_dir: 0.0182
+2024/04/23 18:39:04 - mmengine - INFO - Epoch(train) [1][ 150/1238]  lr: 2.2748e-04  eta: 0:14:19  time: 0.2676  data_time: 0.0024  memory: 3147  grad_norm: 0.9215  loss: 0.2558  loss_cls: 0.0821  loss_bbox: 0.1576  loss_dir: 0.0162
+2024/04/23 18:39:18 - mmengine - INFO - Epoch(train) [1][ 200/1238]  lr: 2.2943e-04  eta: 0:11:24  time: 0.2659  data_time: 0.0029  memory: 3137  grad_norm: 0.8049  loss: 0.2646  loss_cls: 0.0842  loss_bbox: 0.1640  loss_dir: 0.0164
+2024/04/23 18:39:31 - mmengine - INFO - Epoch(train) [1][ 250/1238]  lr: 2.3193e-04  eta: 0:09:34  time: 0.2687  data_time: 0.0026  memory: 3134  grad_norm: 0.8304  loss: 0.2603  loss_cls: 0.0805  loss_bbox: 0.1638  loss_dir: 0.0160
+2024/04/23 18:39:45 - mmengine - INFO - Epoch(train) [1][ 300/1238]  lr: 2.3499e-04  eta: 0:08:16  time: 0.2695  data_time: 0.0022  memory: 3187  grad_norm: 0.7711  loss: 0.2555  loss_cls: 0.0793  loss_bbox: 0.1612  loss_dir: 0.0150
+2024/04/23 18:39:58 - mmengine - INFO - Epoch(train) [1][ 350/1238]  lr: 2.3861e-04  eta: 0:07:17  time: 0.2723  data_time: 0.0054  memory: 3130  grad_norm: 0.7176  loss: 0.2631  loss_cls: 0.0831  loss_bbox: 0.1651  loss_dir: 0.0149
+2024/04/23 18:40:12 - mmengine - INFO - Epoch(train) [1][ 400/1238]  lr: 2.4279e-04  eta: 0:06:29  time: 0.2718  data_time: 0.0032  memory: 3192  grad_norm: 0.6801  loss: 0.2478  loss_cls: 0.0763  loss_bbox: 0.1556  loss_dir: 0.0160
+2024/04/23 18:40:25 - mmengine - INFO - Epoch(train) [1][ 450/1238]  lr: 2.4753e-04  eta: 0:05:49  time: 0.2713  data_time: 0.0028  memory: 3126  grad_norm: 0.8195  loss: 0.2610  loss_cls: 0.0808  loss_bbox: 0.1633  loss_dir: 0.0168
+2024/04/23 18:40:39 - mmengine - INFO - Epoch(train) [1][ 500/1238]  lr: 2.5282e-04  eta: 0:05:14  time: 0.2709  data_time: 0.0034  memory: 3159  grad_norm: 0.7072  loss: 0.2556  loss_cls: 0.0798  loss_bbox: 0.1596  loss_dir: 0.0162
+2024/04/23 18:40:53 - mmengine - INFO - Epoch(train) [1][ 550/1238]  lr: 2.5867e-04  eta: 0:04:43  time: 0.2727  data_time: 0.0027  memory: 3145  grad_norm: 0.7630  loss: 0.2484  loss_cls: 0.0796  loss_bbox: 0.1551  loss_dir: 0.0138
+2024/04/23 18:41:06 - mmengine - INFO - Epoch(train) [1][ 600/1238]  lr: 2.6508e-04  eta: 0:04:15  time: 0.2704  data_time: 0.0020  memory: 3162  grad_norm: 0.7233  loss: 0.2603  loss_cls: 0.0797  loss_bbox: 0.1638  loss_dir: 0.0168
+2024/04/23 18:41:20 - mmengine - INFO - Epoch(train) [1][ 650/1238]  lr: 2.7204e-04  eta: 0:03:49  time: 0.2722  data_time: 0.0027  memory: 3134  grad_norm: 0.6902  loss: 0.2560  loss_cls: 0.0787  loss_bbox: 0.1610  loss_dir: 0.0163
+2024/04/23 18:41:33 - mmengine - INFO - Epoch(train) [1][ 700/1238]  lr: 2.7956e-04  eta: 0:03:25  time: 0.2691  data_time: 0.0023  memory: 3160  grad_norm: 0.6834  loss: 0.2454  loss_cls: 0.0773  loss_bbox: 0.1527  loss_dir: 0.0154
+2024/04/23 18:41:47 - mmengine - INFO - Epoch(train) [1][ 750/1238]  lr: 2.8764e-04  eta: 0:03:02  time: 0.2703  data_time: 0.0023  memory: 3143  grad_norm: 0.6544  loss: 0.2511  loss_cls: 0.0802  loss_bbox: 0.1560  loss_dir: 0.0149
+2024/04/23 18:42:00 - mmengine - INFO - Epoch(train) [1][ 800/1238]  lr: 2.9627e-04  eta: 0:02:41  time: 0.2706  data_time: 0.0020  memory: 3133  grad_norm: 0.6560  loss: 0.2492  loss_cls: 0.0792  loss_bbox: 0.1552  loss_dir: 0.0148
+2024/04/23 18:42:14 - mmengine - INFO - Epoch(train) [1][ 850/1238]  lr: 3.0545e-04  eta: 0:02:20  time: 0.2717  data_time: 0.0022  memory: 3159  grad_norm: 0.6002  loss: 0.2508  loss_cls: 0.0763  loss_bbox: 0.1597  loss_dir: 0.0148
+2024/04/23 18:42:27 - mmengine - INFO - Epoch(train) [1][ 900/1238]  lr: 3.1519e-04  eta: 0:02:00  time: 0.2700  data_time: 0.0018  memory: 3152  grad_norm: 0.6998  loss: 0.2346  loss_cls: 0.0714  loss_bbox: 0.1480  loss_dir: 0.0151
+2024/04/23 18:42:41 - mmengine - INFO - Epoch(train) [1][ 950/1238]  lr: 3.2548e-04  eta: 0:01:41  time: 0.2716  data_time: 0.0030  memory: 3135  grad_norm: 0.6452  loss: 0.2465  loss_cls: 0.0733  loss_bbox: 0.1581  loss_dir: 0.0151
+2024/04/23 18:42:54 - mmengine - INFO - Exp name: adversarial-second_hv_secfpn_8xb6-80e_kitti-3d-car_20240423_183650
+2024/04/23 18:42:54 - mmengine - INFO - Epoch(train) [1][1000/1238]  lr: 3.3632e-04  eta: 0:01:22  time: 0.2696  data_time: 0.0031  memory: 3148  grad_norm: 0.5819  loss: 0.2408  loss_cls: 0.0747  loss_bbox: 0.1534  loss_dir: 0.0126
+2024/04/23 18:43:08 - mmengine - INFO - Epoch(train) [1][1050/1238]  lr: 3.4772e-04  eta: 0:01:04  time: 0.2730  data_time: 0.0035  memory: 3129  grad_norm: 0.5955  loss: 0.2445  loss_cls: 0.0762  loss_bbox: 0.1544  loss_dir: 0.0139
+2024/04/23 18:43:22 - mmengine - INFO - Epoch(train) [1][1100/1238]  lr: 3.5967e-04  eta: 0:00:47  time: 0.2708  data_time: 0.0024  memory: 3177  grad_norm: 0.5869  loss: 0.2554  loss_cls: 0.0798  loss_bbox: 0.1608  loss_dir: 0.0148
+2024/04/23 18:43:35 - mmengine - INFO - Epoch(train) [1][1150/1238]  lr: 3.7217e-04  eta: 0:00:29  time: 0.2709  data_time: 0.0032  memory: 3154  grad_norm: 0.5938  loss: 0.2539  loss_cls: 0.0796  loss_bbox: 0.1587  loss_dir: 0.0156
+2024/04/23 18:43:49 - mmengine - INFO - Epoch(train) [1][1200/1238]  lr: 3.8521e-04  eta: 0:00:12  time: 0.2738  data_time: 0.0021  memory: 3169  grad_norm: 0.5539  loss: 0.2332  loss_cls: 0.0713  loss_bbox: 0.1477  loss_dir: 0.0142
+2024/04/23 18:43:59 - mmengine - INFO - Exp name: adversarial-second_hv_secfpn_8xb6-80e_kitti-3d-car_20240423_183650
+2024/04/23 18:43:59 - mmengine - INFO - Saving checkpoint at 1 epochs
+2024/04/23 18:44:15 - mmengine - INFO - Epoch(val) [1][  50/3769]    eta: 0:18:14  time: 0.2943  data_time: 0.2566  memory: 3157  
+2024/04/23 18:44:16 - mmengine - INFO - Epoch(val) [1][ 100/3769]    eta: 0:10:01  time: 0.0335  data_time: 0.0011  memory: 252  
+2024/04/23 18:44:18 - mmengine - INFO - Epoch(val) [1][ 150/3769]    eta: 0:07:14  time: 0.0326  data_time: 0.0004  memory: 252  
+2024/04/23 18:44:20 - mmengine - INFO - Epoch(val) [1][ 200/3769]    eta: 0:05:52  time: 0.0343  data_time: 0.0004  memory: 252  
+2024/04/23 18:44:21 - mmengine - INFO - Epoch(val) [1][ 250/3769]    eta: 0:05:02  time: 0.0344  data_time: 0.0005  memory: 252  
+2024/04/23 18:44:23 - mmengine - INFO - Epoch(val) [1][ 300/3769]    eta: 0:04:27  time: 0.0329  data_time: 0.0005  memory: 252  
+2024/04/23 18:44:25 - mmengine - INFO - Epoch(val) [1][ 350/3769]    eta: 0:04:01  time: 0.0333  data_time: 0.0005  memory: 252  
+2024/04/23 18:44:26 - mmengine - INFO - Epoch(val) [1][ 400/3769]    eta: 0:03:43  time: 0.0343  data_time: 0.0007  memory: 252  
+2024/04/23 18:44:28 - mmengine - INFO - Epoch(val) [1][ 450/3769]    eta: 0:03:27  time: 0.0343  data_time: 0.0005  memory: 252  
+2024/04/23 18:44:30 - mmengine - INFO - Epoch(val) [1][ 500/3769]    eta: 0:03:15  time: 0.0333  data_time: 0.0002  memory: 252  
+2024/04/23 18:44:31 - mmengine - INFO - Epoch(val) [1][ 550/3769]    eta: 0:03:04  time: 0.0328  data_time: 0.0007  memory: 252  
+2024/04/23 18:44:33 - mmengine - INFO - Epoch(val) [1][ 600/3769]    eta: 0:02:55  time: 0.0334  data_time: 0.0005  memory: 252  
+2024/04/23 18:44:35 - mmengine - INFO - Epoch(val) [1][ 650/3769]    eta: 0:02:47  time: 0.0344  data_time: 0.0007  memory: 252  
+2024/04/23 18:44:37 - mmengine - INFO - Epoch(val) [1][ 700/3769]    eta: 0:02:40  time: 0.0358  data_time: 0.0002  memory: 252  
+2024/04/23 18:44:38 - mmengine - INFO - Epoch(val) [1][ 750/3769]    eta: 0:02:34  time: 0.0357  data_time: 0.0005  memory: 252  
+2024/04/23 18:44:40 - mmengine - INFO - Epoch(val) [1][ 800/3769]    eta: 0:02:28  time: 0.0328  data_time: 0.0006  memory: 252  
+2024/04/23 18:44:42 - mmengine - INFO - Epoch(val) [1][ 850/3769]    eta: 0:02:23  time: 0.0327  data_time: 0.0008  memory: 252  
+2024/04/23 18:44:43 - mmengine - INFO - Epoch(val) [1][ 900/3769]    eta: 0:02:18  time: 0.0337  data_time: 0.0003  memory: 252  
+2024/04/23 18:44:45 - mmengine - INFO - Epoch(val) [1][ 950/3769]    eta: 0:02:13  time: 0.0332  data_time: 0.0005  memory: 252  
+2024/04/23 18:44:47 - mmengine - INFO - Epoch(val) [1][1000/3769]    eta: 0:02:09  time: 0.0324  data_time: 0.0012  memory: 252  
+2024/04/23 18:44:48 - mmengine - INFO - Epoch(val) [1][1050/3769]    eta: 0:02:05  time: 0.0327  data_time: 0.0003  memory: 252  
+2024/04/23 18:44:50 - mmengine - INFO - Epoch(val) [1][1100/3769]    eta: 0:02:01  time: 0.0327  data_time: 0.0005  memory: 252  
+2024/04/23 18:44:52 - mmengine - INFO - Epoch(val) [1][1150/3769]    eta: 0:01:57  time: 0.0324  data_time: 0.0005  memory: 252  
+2024/04/23 18:44:53 - mmengine - INFO - Epoch(val) [1][1200/3769]    eta: 0:01:53  time: 0.0328  data_time: 0.0004  memory: 252  
+2024/04/23 18:44:55 - mmengine - INFO - Epoch(val) [1][1250/3769]    eta: 0:01:50  time: 0.0326  data_time: 0.0003  memory: 252  
+2024/04/23 18:44:57 - mmengine - INFO - Epoch(val) [1][1300/3769]    eta: 0:01:47  time: 0.0345  data_time: 0.0005  memory: 252  
+2024/04/23 18:44:58 - mmengine - INFO - Epoch(val) [1][1350/3769]    eta: 0:01:44  time: 0.0355  data_time: 0.0004  memory: 252  
+2024/04/23 18:45:00 - mmengine - INFO - Epoch(val) [1][1400/3769]    eta: 0:01:41  time: 0.0347  data_time: 0.0003  memory: 252  
+2024/04/23 18:45:02 - mmengine - INFO - Epoch(val) [1][1450/3769]    eta: 0:01:38  time: 0.0357  data_time: 0.0003  memory: 252  
+2024/04/23 18:45:03 - mmengine - INFO - Epoch(val) [1][1500/3769]    eta: 0:01:36  time: 0.0332  data_time: 0.0005  memory: 252  
+2024/04/23 18:45:05 - mmengine - INFO - Epoch(val) [1][1550/3769]    eta: 0:01:33  time: 0.0331  data_time: 0.0003  memory: 252  
+2024/04/23 18:45:07 - mmengine - INFO - Epoch(val) [1][1600/3769]    eta: 0:01:30  time: 0.0330  data_time: 0.0005  memory: 252  
+2024/04/23 18:45:08 - mmengine - INFO - Epoch(val) [1][1650/3769]    eta: 0:01:27  time: 0.0330  data_time: 0.0004  memory: 252  
+2024/04/23 18:45:10 - mmengine - INFO - Epoch(val) [1][1700/3769]    eta: 0:01:25  time: 0.0321  data_time: 0.0005  memory: 252  
+2024/04/23 18:45:12 - mmengine - INFO - Epoch(val) [1][1750/3769]    eta: 0:01:22  time: 0.0331  data_time: 0.0008  memory: 252  
+2024/04/23 18:45:13 - mmengine - INFO - Epoch(val) [1][1800/3769]    eta: 0:01:20  time: 0.0329  data_time: 0.0008  memory: 252  
+2024/04/23 18:45:15 - mmengine - INFO - Epoch(val) [1][1850/3769]    eta: 0:01:17  time: 0.0324  data_time: 0.0004  memory: 252  
+2024/04/23 18:45:17 - mmengine - INFO - Epoch(val) [1][1900/3769]    eta: 0:01:15  time: 0.0328  data_time: 0.0004  memory: 252  
+2024/04/23 18:45:18 - mmengine - INFO - Epoch(val) [1][1950/3769]    eta: 0:01:13  time: 0.0345  data_time: 0.0005  memory: 252  
+2024/04/23 18:45:20 - mmengine - INFO - Epoch(val) [1][2000/3769]    eta: 0:01:10  time: 0.0343  data_time: 0.0006  memory: 252  
+2024/04/23 18:45:22 - mmengine - INFO - Epoch(val) [1][2050/3769]    eta: 0:01:08  time: 0.0353  data_time: 0.0004  memory: 252  
+2024/04/23 18:45:24 - mmengine - INFO - Epoch(val) [1][2100/3769]    eta: 0:01:06  time: 0.0351  data_time: 0.0006  memory: 252  
+2024/04/23 18:45:25 - mmengine - INFO - Epoch(val) [1][2150/3769]    eta: 0:01:04  time: 0.0339  data_time: 0.0009  memory: 252  
+2024/04/23 18:45:27 - mmengine - INFO - Epoch(val) [1][2200/3769]    eta: 0:01:02  time: 0.0339  data_time: 0.0002  memory: 252  
+2024/04/23 18:45:29 - mmengine - INFO - Epoch(val) [1][2250/3769]    eta: 0:00:59  time: 0.0331  data_time: 0.0005  memory: 252  
+2024/04/23 18:45:30 - mmengine - INFO - Epoch(val) [1][2300/3769]    eta: 0:00:57  time: 0.0328  data_time: 0.0007  memory: 252  
+2024/04/23 18:45:32 - mmengine - INFO - Epoch(val) [1][2350/3769]    eta: 0:00:55  time: 0.0323  data_time: 0.0006  memory: 252  
+2024/04/23 18:45:34 - mmengine - INFO - Epoch(val) [1][2400/3769]    eta: 0:00:53  time: 0.0324  data_time: 0.0004  memory: 252  
+2024/04/23 18:45:35 - mmengine - INFO - Epoch(val) [1][2450/3769]    eta: 0:00:51  time: 0.0325  data_time: 0.0005  memory: 252  
+2024/04/23 18:45:37 - mmengine - INFO - Epoch(val) [1][2500/3769]    eta: 0:00:49  time: 0.0326  data_time: 0.0009  memory: 252  
+2024/04/23 18:45:38 - mmengine - INFO - Epoch(val) [1][2550/3769]    eta: 0:00:47  time: 0.0331  data_time: 0.0006  memory: 252  
+2024/04/23 18:45:40 - mmengine - INFO - Epoch(val) [1][2600/3769]    eta: 0:00:45  time: 0.0328  data_time: 0.0005  memory: 252  
+2024/04/23 18:45:42 - mmengine - INFO - Epoch(val) [1][2650/3769]    eta: 0:00:42  time: 0.0342  data_time: 0.0005  memory: 252  
+2024/04/23 18:45:44 - mmengine - INFO - Epoch(val) [1][2700/3769]    eta: 0:00:41  time: 0.0355  data_time: 0.0016  memory: 252  
+2024/04/23 18:45:45 - mmengine - INFO - Epoch(val) [1][2750/3769]    eta: 0:00:39  time: 0.0355  data_time: 0.0006  memory: 252  
+2024/04/23 18:45:47 - mmengine - INFO - Epoch(val) [1][2800/3769]    eta: 0:00:37  time: 0.0338  data_time: 0.0006  memory: 252  
+2024/04/23 18:45:49 - mmengine - INFO - Epoch(val) [1][2850/3769]    eta: 0:00:35  time: 0.0326  data_time: 0.0003  memory: 252  
+2024/04/23 18:45:50 - mmengine - INFO - Epoch(val) [1][2900/3769]    eta: 0:00:33  time: 0.0338  data_time: 0.0008  memory: 252  
+2024/04/23 18:45:52 - mmengine - INFO - Epoch(val) [1][2950/3769]    eta: 0:00:31  time: 0.0335  data_time: 0.0010  memory: 252  
+2024/04/23 18:45:54 - mmengine - INFO - Epoch(val) [1][3000/3769]    eta: 0:00:29  time: 0.0331  data_time: 0.0004  memory: 252  
+2024/04/23 18:45:55 - mmengine - INFO - Epoch(val) [1][3050/3769]    eta: 0:00:27  time: 0.0330  data_time: 0.0001  memory: 252  
+2024/04/23 18:45:57 - mmengine - INFO - Epoch(val) [1][3100/3769]    eta: 0:00:25  time: 0.0327  data_time: 0.0005  memory: 252  
+2024/04/23 18:45:59 - mmengine - INFO - Epoch(val) [1][3150/3769]    eta: 0:00:23  time: 0.0327  data_time: 0.0011  memory: 252  
+2024/04/23 18:46:00 - mmengine - INFO - Epoch(val) [1][3200/3769]    eta: 0:00:21  time: 0.0331  data_time: 0.0006  memory: 252  
+2024/04/23 18:46:02 - mmengine - INFO - Epoch(val) [1][3250/3769]    eta: 0:00:19  time: 0.0334  data_time: 0.0004  memory: 252  
+2024/04/23 18:46:04 - mmengine - INFO - Epoch(val) [1][3300/3769]    eta: 0:00:17  time: 0.0338  data_time: 0.0006  memory: 252  
+2024/04/23 18:46:05 - mmengine - INFO - Epoch(val) [1][3350/3769]    eta: 0:00:15  time: 0.0348  data_time: 0.0008  memory: 252  
+2024/04/23 18:46:07 - mmengine - INFO - Epoch(val) [1][3400/3769]    eta: 0:00:13  time: 0.0356  data_time: 0.0005  memory: 252  
+2024/04/23 18:46:09 - mmengine - INFO - Epoch(val) [1][3450/3769]    eta: 0:00:11  time: 0.0341  data_time: 0.0004  memory: 252  
+2024/04/23 18:46:11 - mmengine - INFO - Epoch(val) [1][3500/3769]    eta: 0:00:10  time: 0.0342  data_time: 0.0005  memory: 252  
+2024/04/23 18:46:12 - mmengine - INFO - Epoch(val) [1][3550/3769]    eta: 0:00:08  time: 0.0333  data_time: 0.0005  memory: 252  
+2024/04/23 18:46:14 - mmengine - INFO - Epoch(val) [1][3600/3769]    eta: 0:00:06  time: 0.0337  data_time: 0.0004  memory: 252  
+2024/04/23 18:46:16 - mmengine - INFO - Epoch(val) [1][3650/3769]    eta: 0:00:04  time: 0.0325  data_time: 0.0002  memory: 252  
+2024/04/23 18:46:17 - mmengine - INFO - Epoch(val) [1][3700/3769]    eta: 0:00:02  time: 0.0333  data_time: 0.0006  memory: 252  
+2024/04/23 18:46:19 - mmengine - INFO - Epoch(val) [1][3750/3769]    eta: 0:00:00  time: 0.0328  data_time: 0.0006  memory: 252  
+2024/04/23 18:47:14 - mmengine - INFO - Results of pred_instances_3d:
+
+----------- AP11 Results ------------
+
+Car AP11@0.70, 0.70, 0.70:
+bbox AP11:94.5700, 89.7637, 87.9504
+bev  AP11:90.0488, 87.2354, 83.9130
+3d   AP11:88.6793, 78.3938, 76.0271
+aos  AP11:94.44, 89.38, 87.33
+Car AP11@0.70, 0.50, 0.50:
+bbox AP11:94.5700, 89.7637, 87.9504
+bev  AP11:94.6499, 90.0522, 88.7031
+3d   AP11:94.6096, 89.9508, 88.4595
+aos  AP11:94.44, 89.38, 87.33
+
+----------- AP40 Results ------------
+
+Car AP40@0.70, 0.70, 0.70:
+bbox AP40:97.5898, 92.3700, 89.1278
+bev  AP40:93.7906, 88.3317, 85.0883
+3d   AP40:90.8751, 81.2516, 76.1372
+aos  AP40:97.46, 91.95, 88.47
+Car AP40@0.70, 0.50, 0.50:
+bbox AP40:97.5898, 92.3700, 89.1278
+bev  AP40:97.6910, 94.6568, 91.5708
+3d   AP40:97.6373, 94.4647, 91.3026
+aos  AP40:97.46, 91.95, 88.47
+
+2024/04/23 18:47:14 - mmengine - INFO - Epoch(val) [1][3769/3769]    Kitti metric/pred_instances_3d/KITTI/Car_3D_AP11_easy_strict: 88.6793  Kitti metric/pred_instances_3d/KITTI/Car_BEV_AP11_easy_strict: 90.0488  Kitti metric/pred_instances_3d/KITTI/Car_2D_AP11_easy_strict: 94.5700  Kitti metric/pred_instances_3d/KITTI/Car_3D_AP11_moderate_strict: 78.3938  Kitti metric/pred_instances_3d/KITTI/Car_BEV_AP11_moderate_strict: 87.2354  Kitti metric/pred_instances_3d/KITTI/Car_2D_AP11_moderate_strict: 89.7637  Kitti metric/pred_instances_3d/KITTI/Car_3D_AP11_hard_strict: 76.0271  Kitti metric/pred_instances_3d/KITTI/Car_BEV_AP11_hard_strict: 83.9130  Kitti metric/pred_instances_3d/KITTI/Car_2D_AP11_hard_strict: 87.9504  Kitti metric/pred_instances_3d/KITTI/Car_3D_AP11_easy_loose: 94.6096  Kitti metric/pred_instances_3d/KITTI/Car_BEV_AP11_easy_loose: 94.6499  Kitti metric/pred_instances_3d/KITTI/Car_2D_AP11_easy_loose: 94.5700  Kitti metric/pred_instances_3d/KITTI/Car_3D_AP11_moderate_loose: 89.9508  Kitti metric/pred_instances_3d/KITTI/Car_BEV_AP11_moderate_loose: 90.0522  Kitti metric/pred_instances_3d/KITTI/Car_2D_AP11_moderate_loose: 89.7637  Kitti metric/pred_instances_3d/KITTI/Car_3D_AP11_hard_loose: 88.4595  Kitti metric/pred_instances_3d/KITTI/Car_BEV_AP11_hard_loose: 88.7031  Kitti metric/pred_instances_3d/KITTI/Car_2D_AP11_hard_loose: 87.9504  Kitti metric/pred_instances_3d/KITTI/Car_3D_AP40_easy_strict: 90.8751  Kitti metric/pred_instances_3d/KITTI/Car_BEV_AP40_easy_strict: 93.7906  Kitti metric/pred_instances_3d/KITTI/Car_2D_AP40_easy_strict: 97.5898  Kitti metric/pred_instances_3d/KITTI/Car_3D_AP40_moderate_strict: 81.2516  Kitti metric/pred_instances_3d/KITTI/Car_BEV_AP40_moderate_strict: 88.3317  Kitti metric/pred_instances_3d/KITTI/Car_2D_AP40_moderate_strict: 92.3700  Kitti metric/pred_instances_3d/KITTI/Car_3D_AP40_hard_strict: 76.1372  Kitti metric/pred_instances_3d/KITTI/Car_BEV_AP40_hard_strict: 85.0883  Kitti metric/pred_instances_3d/KITTI/Car_2D_AP40_hard_strict: 89.1278  Kitti metric/pred_instances_3d/KITTI/Car_3D_AP40_easy_loose: 97.6373  Kitti metric/pred_instances_3d/KITTI/Car_BEV_AP40_easy_loose: 97.6910  Kitti metric/pred_instances_3d/KITTI/Car_2D_AP40_easy_loose: 97.5898  Kitti metric/pred_instances_3d/KITTI/Car_3D_AP40_moderate_loose: 94.4647  Kitti metric/pred_instances_3d/KITTI/Car_BEV_AP40_moderate_loose: 94.6568  Kitti metric/pred_instances_3d/KITTI/Car_2D_AP40_moderate_loose: 92.3700  Kitti metric/pred_instances_3d/KITTI/Car_3D_AP40_hard_loose: 91.3026  Kitti metric/pred_instances_3d/KITTI/Car_BEV_AP40_hard_loose: 91.5708  Kitti metric/pred_instances_3d/KITTI/Car_2D_AP40_hard_loose: 89.1278  data_time: 0.0039  time: 0.0370
