@@ -5,7 +5,6 @@ import json
 class CustomRunner(Runner):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Directly calling train_step in the constructor is not typical usage.
         if self.train_dataloader is not None and hasattr(self.model, 'train_step'):
             # Emulate part of the training loop for a single batch
             data_batch = next(iter(self.train_dataloader))
@@ -63,15 +62,12 @@ class CustomRunner(Runner):
 
     def compute_perturbation_norm(self, outputs):
         pass
-        # # Dummy implementation - replace with your actual computation
-        # return torch.tensor(0.0, device=outputs.device)
+
 
     def compute_perturbation_bias(self, outputs):
         pass
-        # # Dummy implementation - replace with your actual computation
-        # return torch.tensor(0.0, device=outputs.device)
+
 
     def compute_perturbation_imbalance(self, outputs):
         pass
-        # # Dummy implementation - replace with your actual computation
-        # return torch.tensor(0.0, device=outputs.device)
+

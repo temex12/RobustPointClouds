@@ -65,6 +65,3 @@ class VoxelPerturber(nn.Module):
         self.l2_percentages.clear()  # Clear the percentage list after saving
 
 
-# Example usage:
-# Create an instance of VoxelPerturber and perform operations
-# At the end of an epoch or training, call perturber.save_l2_norms() to save the norms
