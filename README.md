@@ -2,14 +2,6 @@
 
 Adversarial training framework for improving robustness of 3D object detectors against perturbations in point cloud data.
 
-## Architecture
-
-![Architecture Overview](images/overview-arch.png)
-
-## L2 Norms
-
-![L2 Norms](images/l2norms.png)
-
 ## Overview
 
 This framework implements adversarial training for 3D object detection using learned perturbations within physically plausible sensor error bounds. Supports VoxelNet/SECOND for KITTI and CenterPoint for NuScenes datasets.

@@ -19,11 +19,18 @@ work_dirs/
 # Visualizations
 figures/
 visualizations/
+visualizationOutput/
 paper_figures/
 visualizations_3d/
+images/
 *.png
 *.jpg
 *.pdf
+
+# Training/Test outputs
+NewAdvTrainingOutput/
+NewTestOutput/
+PreviousTrials/
 
 # Logs
 *.log
